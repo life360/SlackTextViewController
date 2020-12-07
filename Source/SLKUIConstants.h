@@ -45,7 +45,10 @@ __unused static CGFloat SLKPointSizeDifferenceForCategory(NSString *category)
 
 __unused static CGRect SLKKeyWindowBounds()
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
     return [[UIApplication sharedApplication] keyWindow].bounds;
+#pragma clang diagnostic pop
 }
 
 __unused static CGRect SLKRectInvert(CGRect rect)
