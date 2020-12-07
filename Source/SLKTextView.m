@@ -192,8 +192,10 @@ static NSString *const SLKTextViewGenericFormattingSelectorPrefix = @"slk_format
 - (NSUInteger)maxNumberOfLines
 {
     NSUInteger numberOfLines = _maxNumberOfLines;
-    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
     if (SLK_IS_LANDSCAPE) {
+#pragma clang diagnostic pop
         if ((SLK_IS_IPHONE4 || SLK_IS_IPHONE5)) {
             numberOfLines = 2.0; // 2 lines max on smaller iPhones
         }
@@ -781,9 +783,11 @@ SLKPastableMediaType SLKPastableMediaTypeFromNSString(NSString *string)
     NSLayoutManager *manager = self.layoutManager;
     CGRect targetRect = [manager boundingRectForGlyphRange:self.selectedRange inTextContainer:self.textContainer];
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
     [menu setTargetRect:targetRect inView:self];
-    
     [menu setMenuVisible:YES animated:YES];
+#pragma clang diagnostic pop
 }
 
 - (NSString *)slk_formattingTitleFromSelector:(SEL)selector

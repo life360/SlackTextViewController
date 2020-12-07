@@ -155,8 +155,10 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     self.keyboardPanningEnabled = YES;
     self.shouldClearTextAtRightButtonPress = YES;
     self.shouldScrollToBottomAfterKeyboardShows = NO;
-    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
     self.automaticallyAdjustsScrollViewInsets = YES;
+#pragma clang diagnostic pop
     self.extendedLayoutIncludesOpaqueBars = YES;
 }
 
@@ -467,13 +469,18 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     
     CGFloat topBarsHeight = CGRectGetHeight(self.navigationController.navigationBar.frame);
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
     if ((SLK_IS_IPHONE && SLK_IS_LANDSCAPE && SLK_IS_IOS8_AND_HIGHER) ||
+#pragma clang diagnostic pop
         (SLK_IS_IPAD && self.modalPresentationStyle == UIModalPresentationFormSheet) ||
         self.isPresentedInPopover) {
         return topBarsHeight;
     }
-    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
     topBarsHeight += CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
+#pragma clang diagnostic pop
     
     return topBarsHeight;
 }
@@ -1170,7 +1177,10 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     CGRect endFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
     // Fixes iOS7 oddness with inverted values on landscape orientation
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
     if (!SLK_IS_IOS8_AND_HIGHER && SLK_IS_LANDSCAPE) {
+#pragma clang diagnostic pop
         beginFrame = SLKRectInvert(beginFrame);
         endFrame = SLKRectInvert(endFrame);
     }
@@ -1780,13 +1790,13 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
                             if (prefix.length > 0 && word.length > 0) {
                                 
                                 // Captures the detected symbol prefix
-                                _foundPrefix = prefix;
+                                self->_foundPrefix = prefix;
                                 
                                 // Removes the found prefix, or not.
-                                _foundWord = [word substringFromIndex:prefix.length];
+                                self->_foundWord = [word substringFromIndex:prefix.length];
                                 
                                 // Used later for replacing the detected range with a new string alias returned in -acceptAutoCompletionWithString:
-                                _foundPrefixRange = NSMakeRange(wordRange.location, prefix.length);
+                                self->_foundPrefixRange = NSMakeRange(wordRange.location, prefix.length);
                                 
                                 [self slk_handleProcessedWord:word wordRange:wordRange];
                             }
@@ -1873,7 +1883,10 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
             cachedAttributedText = [[NSAttributedString alloc] initWithString:obj];
         }
         else if ([obj isKindOfClass:[NSData class]]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
             cachedAttributedText = [NSKeyedUnarchiver unarchiveObjectWithData:obj];
+#pragma clang diagnostic pop
         }
     }
     
@@ -1907,13 +1920,19 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
             cachedAttributedText = [[NSAttributedString alloc] initWithString:obj];
         }
         else if ([obj isKindOfClass:[NSData class]]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
             cachedAttributedText = [NSKeyedUnarchiver unarchiveObjectWithData:obj];
+#pragma clang diagnostic pop
         }
     }
     
     // Caches text only if its a valid string and not already cached
     if (attributedText.length > 0 && ![attributedText isEqualToAttributedString:cachedAttributedText]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:attributedText];
+#pragma clang diagnostic pop
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:key];
     }
     // Clears cache only if it exists
